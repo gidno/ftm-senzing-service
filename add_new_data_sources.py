@@ -55,7 +55,9 @@ def init_senzing(log):
             verbose_logging)
 
     except G2Exception.G2ModuleGenericException as err:
+        log.info('Initalization failed')
         log.info(' %s' % err)
+        sys.exit(1)
 
     # Ensure a default configuration exists
     # If a Senzing default configuration does not exist in the database, create a G2Config instance to be used in creating a default configuration.
@@ -109,7 +111,7 @@ def init_senzing(log):
     return senzing_config_json
 
 # Add data source to config
-def add_data_source_to_config(data_source_name, senzing_config_json, log):
+def add_data_source_to_config(data_source_names_list, senzing_config_json, log):
 
     # init G2Config
     g2_config = G2Config()
@@ -127,26 +129,28 @@ def add_data_source_to_config(data_source_name, senzing_config_json, log):
         log.info(' %s' % err)
 
     # Add Data Source
-    log.info('New data source name: ' + data_source_name.upper())
-    try:
-        datasource_json = "{\"DSRC_CODE\": \"" + data_source_name.upper() + "\"}" 
-        response_bytearray = bytearray()
-        g2_config.addDataSourceV2(config_handle, datasource_json, response_bytearray)
-        log.info('Successfully added')
-    except G2Exception.G2ModuleGenericException as err:
-        log.info(' %s' % err)
+    for data_source_name in data_source_names_list:
+        log.info('New data source name: ' + data_source_name.upper())
+        try:
+            datasource_json = "{\"DSRC_CODE\": \"" + data_source_name.upper() + "\"}" 
+            response_bytearray = bytearray()
+            g2_config.addDataSourceV2(config_handle, datasource_json, response_bytearray)
+            log.info('Successfully added')
+        except G2Exception.G2ModuleGenericException as err:
+            log.info(' %s' % err)
 
     # Save
     try:
         response_bytearray = bytearray()
         g2_config.save(config_handle, response_bytearray)    
     except G2Exception.G2ModuleGenericException as err:
+        log.info('Config not saved')
         log.info(' %s' % err)
-    
+        sys.exit(1)
+        
     senzing_model_config_json = response_bytearray.decode()
     
     # Cleanup
-    log.info(g2_config.getLastException())
     # clear exception
     try:
         g2_config.clearLastException()
@@ -231,11 +235,12 @@ def add_new_datasources_to_config(source_files_list, log = None):
                 sys.exit(1)         
             
             # add new datasources to config
-            for data_source in data_source_list:
-                try:
-                    add_new_config(add_data_source_to_config(data_source, senzing_init_config_json, log), senzing_init_config_json, log)
-                except Exception as err:
-                    log.info(' %s' % err)
+            try:
+                add_new_config(add_data_source_to_config(data_source_list, senzing_init_config_json, log), senzing_init_config_json, log)
+            except Exception as err:
+                log.info('New config not added')
+                log.info(' %s' % err)
+                sys.exit(1)
             sys.exit(0)
     
     except Exception as err:
