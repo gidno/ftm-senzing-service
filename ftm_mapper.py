@@ -201,7 +201,7 @@ def transform(data_source: str, entity: EntityProxy,
         addr = ADDRESSES.get(addr_id)
         if addr is None:
             continue
-        elif addr.has("postalCode") or addr.has("city")):
+        elif (addr.has("postalCode") or addr.has("city")):
                 addr_data = {
                     "ADDR_TYPE":            addr_type,
                     "ADDR_LINE1":           addr.first("street"),
