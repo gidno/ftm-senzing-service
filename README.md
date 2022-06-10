@@ -1,7 +1,7 @@
 ## FtM-Senzing Service
 > Service for converting FtM JSONs to Senzing format and then processing them with Senzing API 
 
-*** Strucrure: ***
+ #### Structure: 
 01. ftm_mapper.py - mapper for FtM to Senzing JSON transformations could be used as standalone script or as module 
 02. map_entities_script.py - script for mapping multiple JSON files from FtM to Senzing based on ftm_mapper.py (could be used on Windows an Linux OSs)
 03. senzing_ftm_config.json - Senzing configuration which contains all Features and Attributes used in ftm_mapper.py
@@ -14,9 +14,9 @@
 10. setupEnv - enviorment file which contains required path variables, additional libs and Java dependencies
 11. requierments.txt - requirements for service usage
 
-*** Mapper (info and standalone usage) ***
+#### Mapper (info and standalone usage):
 
-Currently supported Entities:
+##### Currently supported Entities:
 - Things: 
 1. Person
 2. Organization
@@ -35,16 +35,11 @@ Currently supported Entities:
 9. Family
 10. Associate
 
-Standalone usage:
-1. install ftm:
-```
-pip install followthemoney 
-```
-2.Use /python/G2ConfigTool.py inside your Senzing g2 (or project) directory to import Senzing configuration for mapper: 
+##### Standalone usage:
+1. install ftm via ``` pip install followthemoney ```
+2.Use ```python3 /python/G2ConfigTool.py``` inside your Senzing g2 (or project) directory to import Senzing configuration for mapper: 
 
-```
-importFromFile /path_to_file/senzing_ftm_config.json
-```
+```(g2cfg) importFromFile /path_to_file/senzing_ftm_config.json```
 3. use ftm_mapper.py script:
 ```
 python3 ftm_mapper.py --h
@@ -64,21 +59,17 @@ options:
                         optional bool arg (default: False), if set to True - mapper gets stats about unknown entites.
 ```
 
-*** Service installation ***
+#### Service installation:
 0. Minimum system hardware requirements for Senzing could be found at: https://senzing.zendesk.com/hc/en-us/articles/115010259947-System-Requirements
 1. Install Senzing (senzingdata and senzingapi):
 > You need to perform these steps to install Senzing (Debian version):
-
-> sudo apt install apt-transport-https
-
-> wget https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
-
-> sudo apt install ./senzingrepo_1.0.0-1_amd64.deb
-
-> sudo apt update
-
-> sudo apt install senzingapi
-
+```
+sudo apt install apt-transport-https
+wget https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
+sudo apt install ./senzingrepo_1.0.0-1_amd64.deb
+sudo apt update
+sudo apt install senzingapi
+```
 > More info could be found at: https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide
 2. Put all service files into local directory (refered to as ".../ftm-senzing-service-dir/")
 3. Modify your setupEnv file in .../ftm-senzing-service-dir/:
@@ -108,12 +99,12 @@ options:
 
 > "SENZING_SQL_CONNECTION" variable must be equal to your "CONNECTION" variable from G2Module.ini file from .../ftm-senzing-service-dir/
 8. Install followthemoney or just use pip install requirements.txt 
-9. Run "source .../ftm-senzing-service-dir/setupEnv"
-10. Run "python /python/G2ConfigTool.py -c .../ftm-senzing-service-dir/G2Module.ini" inside your Senzing g2 directory to import Senzing configuration for mapper from senzing_ftm_config.json (use importFromFile inside G2ConfigTool)
+9. Run ```source .../ftm-senzing-service-dir/setupEnv```
+10. Run ```python /python/G2ConfigTool.py -c .../ftm-senzing-service-dir/G2Module.ini``` inside your Senzing g2 directory to import Senzing configuration for mapper from senzing_ftm_config.json (use importFromFile inside G2ConfigTool)
 11. Setup done))
 
-*** Usage ***
-- at first you need to run "source .../ftm-senzing-service-dir/setupEnv"
+#### Usage:
+- at first you need to run ```source .../ftm-senzing-service-dir/setupEnv```
 
 - map_entites_script.py
 ```
@@ -190,14 +181,14 @@ optional arguments:
 ```
 (note that redo_records.py script starts infinite loop and thats normal. you need this script to run in background all the time usually)
 
-*** Checking results via G2Explorer.py ***
+#### Checking results via G2Explorer.py:
 
-- at first you need to run "source .../ftm-senzing-service-dir/setupEnv"
+- at first you need to run ```source .../ftm-senzing-service-dir/setupEnv```
 
 - create snapshot using G2Snapshot.py:
-> run "python /python/G2Snapshot.py -c .../ftm-senzing-service-dir/G2Module.ini -o output_snapshot_dir/snapshot_file" inside your Senzing g2 directory to create snapshot "snapshot_file.json" in directory "output_snapshot_dir" (use full path to directory here)
+>```python3 /python/G2Snapshot.py -c .../ftm-senzing-service-dir/G2Module.ini -o output_snapshot_dir/snapshot_file``` inside your Senzing g2 directory to create snapshot "snapshot_file.json" in directory "output_snapshot_dir" (use full path to directory here)
 
 - load snapshot and explore it via G2Explorer.py:
-> run "python /python/G2Explorer.py -c .../ftm-senzing-service-dir/G2Module.ini -o output_snapshot_dir/snapshot_file.json" inside your Senzing g2 directory to load snapshot "snapshot_file.json" from directory "output_snapshot_dir" (use full path to directory here)
+>```python /python/G2Explorer.py -c .../ftm-senzing-service-dir/G2Module.ini -o output_snapshot_dir/snapshot_file.json``` inside your Senzing g2 directory to load snapshot "snapshot_file.json" from directory "output_snapshot_dir" (use full path to directory here)
 
 > explore you results (you may want to look through articles about EDA from Senzing website: https://senzing.zendesk.com/hc/en-us/sections/360009388534-Exploratory-Data-Analysis-EDA-)
