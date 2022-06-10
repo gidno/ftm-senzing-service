@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Set required path variables
+export SENZING_ROOT=/opt/senzing/g2
+export PYTHONPATH=$PYTHONPATH:$SENZING_ROOT/python/senzing:$PYTHONPATH:$SENZING_ROOT/python
+export SENZING_CONFIG_FILE= # put here path to your .../ftm-senzing-service/G2Module.ini file
+
+# Check if we are on a Debian based system, use additional libs
+if [ -f "/etc/debian_version" ]; then
+  export LD_LIBRARY_PATH=$SENZING_ROOT/lib:$SENZING_ROOT/lib/jre/lib/server:$SENZING_ROOT/lib/debian:$LD_LIBRARY_PATH
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export LD_LIBRARY_PATH=$SENZING_ROOT/g2/lib:$SENZING_ROOT/g2/lib/jre/lib/server:$SENZING_ROOT/g2/lib/macos:$LD_LIBRARY_PATH
+  export DYLD_LIBRARY_PATH=$SENZING_ROOT/g2/lib:$SENZING_ROOT/g2/lib/jre/lib/server:$SENZING_ROOT/g2/lib/macos:$DYLD_LIBRARY_PATH
+else
+  export LD_LIBRARY_PATH=$SENZING_ROOT/lib:$SENZING_ROOT/lib/jre/lib/server:$LD_LIBRARY_PATH
+fi
+
+# Add Java dependencies
+export CLASSPATH=$SENZING_ROOT/lib/g2rst.jar:$SENZING_ROOT/lib/g2.jar:$CLASSPATH
+
