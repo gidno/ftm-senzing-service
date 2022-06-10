@@ -1,0 +1,1 @@
+{ "module_name" : "pyG2", "SENZING_G2_DIR" : "/opt/senzing/g2", "SENZING_DATA_DIR" : "/opt/senzing/data/3.0.0", "SENZING_ETC_DIR" : "/etc/opt/senzing", "SENZING_SQL_CONNECTION" : "" }
