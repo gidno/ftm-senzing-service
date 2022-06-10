@@ -68,29 +68,44 @@ options:
 0. Minimum system hardware requirements for Senzing could be found at: https://senzing.zendesk.com/hc/en-us/articles/115010259947-System-Requirements
 1. Install Senzing (senzingdata and senzingapi):
 > You need to perform these steps to install Senzing (Debian version):
+
 > sudo apt install apt-transport-https
+
 > wget https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb
+
 > sudo apt install ./senzingrepo_1.0.0-1_amd64.deb
+
 > sudo apt update
+
 > sudo apt install senzingapi
+
 > More info could be found at: https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide
 2. Put all service files into local directory (refered to as ".../ftm-senzing-service-dir/")
 3. Modify your setupEnv file in .../ftm-senzing-service-dir/:
 > set "SENZING_ROOT" variable as path to your Senzing g2 directory (by default thats "/opt/senzing/g2")
+
 > set "SENZING_CONFIG_FILE" variable as path to your G2Module.ini file in .../ftm-senzing-service-dir/
 4. Install, configure and tune PostgeSQL DB: 
 > for DB setup you may use this guide (stop at "Configure G2Module.ini" section you would need those but you need to modify your G2Module.ini file from next step): https://senzing.zendesk.com/hc/en-us/articles/360041965973-Setup-PostgreSQL-on-Debian-Linux
+
 > for tuning PostgreSQL DB use this guide: https://senzing.zendesk.com/hc/en-us/articles/360016288254-Tuning-Your-Database
 5. Modify your G2Module.ini file in .../ftm-senzing-service-dir/:
 > set "SUPPORTPATH" variable as path to your Senzing data directory (by default thats "/opt/senzing/data/3.0.0" or "/opt/senzing/data")
+
 > set "CONFIGPATH" variable as path to your Senzing config directory (by default thats "/etc/opt/senzing")
+
 > set "RESOURCEPATH" variable as path to your Senzing resources directory (by default thats "/opt/senzing/g2/resources")
+
 > set "LICENSEFILE" variable as path to your Senzing license file (or remove this line if you dont have license) 
+
 > set "CONNECTION" variable as your PostgeSQL connection setting in format "postgresql://username:password@hostname:port:database" (look step 4 guides for more info)
 6. Modify your senzing_init_settings.json file in .../ftm-senzing-service-dir/:
 > "SENZING_G2_DIR" variable must be equal to your "SENZING_ROOT" variable from setupEnv file from .../ftm-senzing-service-dir/
+
 > "SENZING_DATA_DIR" variable must be equal to your "SUPPORTPATH" variable from G2Module.ini file from .../ftm-senzing-service-dir/
+
 > "SENZING_ETC_DIR" variable must be equal to your "CONFIGPATH" variable from G2Module.ini file from .../ftm-senzing-service-dir/
+
 > "SENZING_SQL_CONNECTION" variable must be equal to your "CONNECTION" variable from G2Module.ini file from .../ftm-senzing-service-dir/
 8. Install followthemoney or just use pip install requirements.txt 
 9. Run "source .../ftm-senzing-service-dir/setupEnv"
@@ -184,4 +199,5 @@ optional arguments:
 
 - load snapshot and explore it via G2Explorer.py:
 > run "python /python/G2Explorer.py -c .../ftm-senzing-service-dir/G2Module.ini -o output_snapshot_dir/snapshot_file.json" inside your Senzing g2 directory to load snapshot "snapshot_file.json" from directory "output_snapshot_dir" (use full path to directory here)
+
 > explore you results (you may want to look through articles about EDA from Senzing website: https://senzing.zendesk.com/hc/en-us/sections/360009388534-Exploratory-Data-Analysis-EDA-)
