@@ -5,7 +5,7 @@
 01. ftm_mapper.py - mapper for FtM to Senzing JSON transformations could be used as standalone script or as module 
 02. map_entities_script.py - script for mapping multiple JSON files from FtM to Senzing based on ftm_mapper.py (could be used on Windows an Linux OSs)
 03. senzing_ftm_config.json - Senzing configuration which contains all Features and Attributes used in ftm_mapper.py
-04. senzing_utils.py - module containing all SenzingAPI functions for initialization, work with Senzing configs, loading records and redoing
+04. senzing_utils.py - module containing all SenzingAPI functions for initialization, working with Senzing configs, loading records and redoing
 05. add_new_data_sources.py - script for adding new Data Sources to Senzing config from Senzing JSONs
 06. load_records.py - script for loading records from Senzing JSON file via G2Loader to Senzing
 07. redo_records.py - script for redoing records via G2Loader
@@ -37,9 +37,11 @@
 
 ##### Standalone usage:
 1. install ftm via ``` pip install followthemoney ```
-2.Use ```python3 /python/G2ConfigTool.py``` inside your Senzing g2 (or project) directory to import Senzing configuration for mapper: 
+
+2. Use ```python3 /python/G2ConfigTool.py``` inside your Senzing g2 (or project) directory to import Senzing configuration for mapper: 
 
 ```(g2cfg) importFromFile /path_to_file/senzing_ftm_config.json```
+
 3. use ftm_mapper.py script:
 ```
 python3 ftm_mapper.py --h
@@ -98,7 +100,7 @@ sudo apt install senzingapi
 > "SENZING_ETC_DIR" variable must be equal to your "CONFIGPATH" variable from G2Module.ini file from .../ftm-senzing-service-dir/
 
 > "SENZING_SQL_CONNECTION" variable must be equal to your "CONNECTION" variable from G2Module.ini file from .../ftm-senzing-service-dir/
-8. Install followthemoney or just use pip install requirements.txt 
+8. Install followthemoney ```pip install followthemoney``` or just use ```pip install requirements.txt```
 9. Run ```source .../ftm-senzing-service-dir/setupEnv```
 10. Run ```python /python/G2ConfigTool.py -c .../ftm-senzing-service-dir/G2Module.ini``` inside your Senzing g2 directory to import Senzing configuration for mapper from senzing_ftm_config.json (use importFromFile inside G2ConfigTool)
 11. Setup done))
