@@ -127,7 +127,7 @@ optional arguments:
                         Optional statistics filename.
 ```
 
-- add_new_data_sorces.py
+- add_new_data_sources.py
 ```
 python3 add_new_data_sources.py --h
 usage: add_new_data_sources.py [-h] [-p PATH_TO_FILES] [-lp LOG_FILE_PATH] [-l LOG_FILE] [-i INIT_JSON]
