@@ -81,7 +81,7 @@ sudo apt install senzingapi
 4. Install, configure and tune PostgeSQL DB: 
 > for DB setup you may use this guide (stop at "Configure G2Module.ini" section you would need those but you need to modify your G2Module.ini file from next step): https://senzing.zendesk.com/hc/en-us/articles/360041965973-Setup-PostgreSQL-on-Debian-Linux
 
-> for tuning PostgreSQL DB use this guide: https://senzing.zendesk.com/hc/en-us/articles/360016288254-Tuning-Your-Database
+> for tuning PostgreSQL DB use this guide (note that on "Create New Database & Add Senzing Schema" step you need to use your "SENZING_G2_DIR" instead of "<senzing_project_path>", by default thats "/opt/senzing/g2"): https://senzing.zendesk.com/hc/en-us/articles/360016288254-Tuning-Your-Database
 5. Modify your G2Module.ini file in .../ftm-senzing-service-dir/:
 > set "SUPPORTPATH" variable as path to your Senzing data directory (by default thats "/opt/senzing/data/3.0.0" or "/opt/senzing/data")
 
