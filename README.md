@@ -60,7 +60,7 @@ options:
 ```
 
 #### Service installation:
-0. Minimum system hardware requirements for Senzing could be found at: https://senzing.zendesk.com/hc/en-us/articles/115010259947-System-Requirements
+0. Minimum system and hardware requirements for Senzing could be found at: https://senzing.zendesk.com/hc/en-us/articles/115010259947-System-Requirements
 1. Install Senzing (senzingdata and senzingapi):
 > You need to perform these steps to install Senzing (Debian version):
 ```
