@@ -1,0 +1,2 @@
+followthemoney==2.9.5
+senzing==3.0.1
