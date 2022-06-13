@@ -102,9 +102,9 @@ def init_senzing(senzing_init_settings_filename, log, ensure_default_config = Fa
     init_vars(json_init_data, log)
     
     # paths
-    data_dir = os.environ.get("SENZING_DATA_DIR", "/opt/senzing/data/3.0.0")
-    etc_dir = os.environ.get("SENZING_ETC_DIR", "/etc/opt/senzing")
-    g2_dir = os.environ.get("SENZING_G2_DIR", "/opt/senzing/g2")
+    data_dir = os.environ.get("SENZING_DATA_DIR", json_init_data['SENZING_DATA_DIR'])
+    etc_dir = os.environ.get("SENZING_ETC_DIR", json_init_data['SENZING_ETC_DIR'])
+    g2_dir = os.environ.get("SENZING_G2_DIR", json_init_data['SENZING_G2_DIR'])
 
     # create senzing config
     config_path = etc_dir
