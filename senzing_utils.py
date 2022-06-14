@@ -373,13 +373,23 @@ def load_line(line, engine, config_engine, log, unprocessed_lines_file = None):
             engine.reinit(config_id_bytearray)
             log.info('G2Engine reinitialised')
             data_as_json = json.loads(line)
-            engine.addRecord(
-                data_as_json["DATA_SOURCE"],
-                data_as_json["RECORD_ID"],
-                line)
-        else:
-            if unprocessed_lines_file:
+            try:
+                engine.addRecord(
+                    data_as_json["DATA_SOURCE"],
+                    data_as_json["RECORD_ID"],
+                    line)
+            except Exception as err:
                 log.info(' Error, line recording failed ' + line)
+                log.info(' %s' % err)
+                if unprocessed_lines_file:    
+                    try:
+                        unprocessed_lines_file.write(line)
+                    except Exception as err:
+                        log.info(' %s' % err)
+
+        else:
+            log.info(' Error, line recording failed ' + line)
+            if unprocessed_lines_file:
                 try:
                     unprocessed_lines_file.write(line)
                 except Exception as err:
