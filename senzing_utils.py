@@ -92,6 +92,25 @@ def ensure_default_config_exists(config_mgr_engine, senzing_config_json, log):
         log.info(' %s' % err)
         sys.exit(1)
 
+# init G2ConfigMgr and return engine
+def init_configuration_manager(senzing_config_json, log):
+
+    log = logging.getLogger(log.name + ".init_configuration_manager_function")
+
+    # init G2ConfigMgr
+    g2_configuration_manager = G2ConfigMgr()
+    try:
+        g2_configuration_manager.init(
+            module_name,
+            senzing_config_json,
+            verbose_logging)
+
+    except G2Exception as err:
+        log.info('G2ConfigMgr initalization failed')
+        log.info(' %s' % err)
+        sys.exit(1)
+    return g2_configuration_manager
+
 # init senzing
 def init_senzing(senzing_init_settings_filename, log, ensure_default_config = False):
     
@@ -134,7 +153,7 @@ def init_senzing(senzing_init_settings_filename, log, ensure_default_config = Fa
 
     # init a G2ConfigMgr instance
     
-    g2_configuration_manager = G2ConfigMgr()
+    g2_configuration_manager = init_configuration_manager(senzing_config_json, log)
     try:
         g2_configuration_manager.init(
             module_name,
@@ -151,24 +170,6 @@ def init_senzing(senzing_init_settings_filename, log, ensure_default_config = Fa
 
     return senzing_config_json
 
-# init G2ConfigMgr and return engine
-def init_configuration_manager(senzing_config_json, log):
-
-    log = logging.getLogger(log.name + ".init_configuration_manager_function")
-
-    # init G2ConfigMgr
-    g2_configuration_manager = G2ConfigMgr()
-    try:
-        g2_configuration_manager.init(
-            module_name,
-            senzing_config_json,
-            verbose_logging)
-
-    except G2Exception as err:
-        log.info('G2ConfigMgr initalization failed')
-        log.info(' %s' % err)
-        sys.exit(1)
-    return g2_configuration_manager
 
 # get current default config json
 def get_current_def_config(senzing_config_json, log):
