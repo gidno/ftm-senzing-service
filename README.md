@@ -100,6 +100,8 @@ sudo apt install senzingapi
 
 > "SENZING_ETC_DIR" variable must be equal to your "CONFIGPATH" variable from G2Module.ini file from .../ftm-senzing-service-dir/
 
+> "LICENSEFILE" variable must be equal to your "LICENSEFILE" variable from G2Module.ini file from .../ftm-senzing-service-dir/
+
 > "SENZING_SQL_CONNECTION" variable must be equal to your "CONNECTION" variable from G2Module.ini file from .../ftm-senzing-service-dir/
 8. Install followthemoney ```pip install followthemoney``` or just use ```pip install requirements.txt```
 9. Run ```source .../ftm-senzing-service-dir/setupEnv```
