@@ -30,7 +30,7 @@ def init_vars(json_init_data, log):
     global module_name
     module_name = json_init_data['module_name']        
     global verbose_logging
-    verbose_logging = False 
+    verbose_logging = False
     # sys path
     global python_path 
     python_path = "{0}/python".format(
@@ -105,7 +105,7 @@ def init_senzing(senzing_init_settings_filename, log, ensure_default_config = Fa
     data_dir = os.environ.get("SENZING_DATA_DIR", json_init_data['SENZING_DATA_DIR'])
     etc_dir = os.environ.get("SENZING_ETC_DIR", json_init_data['SENZING_ETC_DIR'])
     g2_dir = os.environ.get("SENZING_G2_DIR", json_init_data['SENZING_G2_DIR'])
-
+    lic_path = os.environ.get("LICENSEFILE", json_init_data['LICENSEFILE'])
     # create senzing config
     config_path = etc_dir
     support_path = os.environ.get("SENZING_DATA_VERSION_DIR", data_dir)
@@ -118,7 +118,8 @@ def init_senzing(senzing_init_settings_filename, log, ensure_default_config = Fa
         "PIPELINE": {
             "CONFIGPATH": config_path,
             "SUPPORTPATH": support_path,
-            "RESOURCEPATH": resource_path
+            "RESOURCEPATH": resource_path,
+            "LICENSEFILE": lic_path
         },
         "SQL": {
             "CONNECTION": sql_connection,
@@ -366,34 +367,42 @@ def load_line(line, engine, config_engine, log, unprocessed_lines_file = None):
                 line)
     
             
-    except G2Exception as err:
-        config_id_bytearray = bytearray()
-        #log.info(' %s' % err)
-        if engine.getActiveConfigID() != config_engine.getDefaultConfigID(config_id_bytearray):
-            engine.reinit(config_id_bytearray)
-            log.info('G2Engine reinitialised')
-            data_as_json = json.loads(line)
-            try:
-                engine.addRecord(
+    except Exception as err:
+        active_config_id_bytearray = bytearray()
+        default_config_id_bytearray = bytearray()
+        engine.getActiveConfigID(active_config_id_bytearray)
+        config_engine.getDefaultConfigID(default_config_id_bytearray)
+        try:
+            if  active_config_id_bytearray != default_config_id_bytearray:
+                engine.reinit()
+                log.info('G2Engine reinitialised')
+                data_as_json = json.loads(line)
+                try:
+                    engine.addRecord(
                     data_as_json["DATA_SOURCE"],
                     data_as_json["RECORD_ID"],
                     line)
-            except Exception as err:
+                except Exception as err:
+                    log.info(' Error, line recording failed ' + line)
+                    log.info(' %s' % err)
+                    if unprocessed_lines_file:    
+                        try:
+                            unprocessed_lines_file.write(line)
+                        except Exception as err:
+                            log.info(' %s' % err)
+
+            else:
                 log.info(' Error, line recording failed ' + line)
                 log.info(' %s' % err)
-                if unprocessed_lines_file:    
+                if unprocessed_lines_file:
                     try:
                         unprocessed_lines_file.write(line)
                     except Exception as err:
                         log.info(' %s' % err)
-
-        else:
-            log.info(' Error, line recording failed ' + line)
-            if unprocessed_lines_file:
-                try:
-                    unprocessed_lines_file.write(line)
-                except Exception as err:
-                    log.info(' %s' % err)
+        
+        except Exception as err:
+            log.info(' %s' % err)
+                
 
 # process file with G2Engine
 def process_file(filename, senzing_init_config_json, log, num_of_threads = 4):
