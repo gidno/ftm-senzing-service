@@ -272,9 +272,9 @@ def transform(data_source: str, entity: EntityProxy,
     relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, OWNERSHIPS,         entity.id,  'role',         'asset',        anchor)        
     relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, DIRECTORSHIPS,      entity.id,  'role',         'organization', anchor)
     relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, EMPLOYMENTS,        entity.id,  'role',         'eployee',      anchor)
-    relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, MEMBERSHIPS,        entity.id,  'role',         'organiztion',  anchor)
+    relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, MEMBERSHIPS,        entity.id,  'role',         'organization',  anchor)
     relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, REPRESENTATIONS,    entity.id,  'role',         'client',       anchor)
-    relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, FAMILIES,           entity.id,  'relationship', 'realtive',     anchor)
+    relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, FAMILIES,           entity.id,  'relationship', 'relative',     anchor)
     relationship_list, anchor = create_disclosed_relashionships(data_source, relationship_list, ASSOCIATIONS,       entity.id,  'relationship', 'associate',    anchor)
     if relationship_list:
         record.update({"RELATIONSHIP_LIST":relationship_list})
