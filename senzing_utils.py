@@ -170,7 +170,6 @@ def init_senzing(senzing_init_settings_filename, log, ensure_default_config = Fa
 
     return senzing_config_json
 
-
 # get current default config json
 def get_current_def_config(senzing_config_json, log):
 
@@ -375,7 +374,7 @@ def load_line(line, engine, config_engine, log, unprocessed_lines_file = None):
         config_engine.getDefaultConfigID(default_config_id_bytearray)
         try:
             if  active_config_id_bytearray != default_config_id_bytearray:
-                engine.reinit()
+                engine.reinit(default_config_id_bytearray)
                 log.info('G2Engine reinitialised')
                 data_as_json = json.loads(line)
                 try:
@@ -404,7 +403,6 @@ def load_line(line, engine, config_engine, log, unprocessed_lines_file = None):
         except Exception as err:
             log.info(' %s' % err)
                 
-
 # process file with G2Engine
 def process_file(filename, senzing_init_config_json, log, num_of_threads = 4):
     
@@ -492,9 +490,12 @@ def redo_record(response_bytearray, engine, config_engine, log):
     try:
         engine.processRedoRecord(response_bytearray)
     except G2Exception as err:
-        config_id_bytearray = bytearray()
-        if engine.getActiveConfigID() != config_engine.getDefaultConfigID(config_id_bytearray):
-            engine.reinit(config_id_bytearray)
+        active_config_id_bytearray = bytearray()
+        default_config_id_bytearray = bytearray()
+        engine.getActiveConfigID(active_config_id_bytearray)
+        config_engine.getDefaultConfigID(default_config_id_bytearray)
+        if  active_config_id_bytearray != default_config_id_bytearray:    
+            engine.reinit(default_config_id_bytearray)
             log.info('G2Engine reinitialised')
         else:
             log.info(' %s' % err)
@@ -550,3 +551,4 @@ def process_redo_records(senzing_init_settings_filename, log = None, num_of_thre
     except Exception as err:
         log.info('Redo process init failed')
         log.info(' %s' % err)
+
