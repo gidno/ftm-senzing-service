@@ -104,12 +104,13 @@ sudo apt install senzingapi
 
 > "SENZING_SQL_CONNECTION" variable must be equal to your "CONNECTION" variable from G2Module.ini file from .../ftm-senzing-service-dir/
 8. Install followthemoney ```pip install followthemoney``` or just use ```pip install requirements.txt```
-9. Run ```source .../ftm-senzing-service-dir/setupEnv```
-10.Update Database with Senzing Configuration
+9. You need to copy 6 files named "stb.config.template", "defaultGNRCP.config.template", "customSn.txt.template", "customOn.txt.template", "customGn.txt.template", "cfgVariant.json.template" from your Senzing templates directory (by default thats "/opt/senzing/resources/templates/") to your Senzing config directory (by default thats "/etc/opt/senzing/"), just copy over those files while dropping the ".template".
+10. Run ```source .../ftm-senzing-service-dir/setupEnv```
+11.Update Database with Senzing Configuration
 > The Senzing engine is configured with a JSON document, on a fresh install this document needs to be registered in the Senzing database. This only needs to happen once with a new project. 
 Run ```python3 ./python/G2SetupConfig.py -c .../ftm-senzing-service-dir/G2Module.ini``` inside your Senzing g2 directory
-11. Run ```python3 ./python/G2ConfigTool.py -c .../ftm-senzing-service-dir/G2Module.ini``` inside your Senzing g2 directory to import Senzing configuration for mapper from senzing_ftm_config.json (use importFromFile inside G2ConfigTool)
-12. Setup done))
+12. Run ```python3 ./python/G2ConfigTool.py -c .../ftm-senzing-service-dir/G2Module.ini``` inside your Senzing g2 directory to import Senzing configuration for mapper from senzing_ftm_config.json (use importFromFile inside G2ConfigTool)
+13. Setup done))
 
 #### Usage:
 - at first you need to run ```source .../ftm-senzing-service-dir/setupEnv```
