@@ -2,7 +2,7 @@
 > Service for converting FtM JSONs to Senzing format and then processing them with Senzing API 
 
  #### Structure: 
-01. ftm_mapper.py - mapper for FtM to Senzing JSON transformations could be used as standalone script or as module 
+01. ftm_mapper.py - mapper for FtM to Senzing JSON transformations could be used as standalone script or as module (mapper is originally developed using code from the GitHub repository at https://github.com/opensanctions/mapper-senzing )
 02. map_entities_script.py - script for mapping multiple JSON files from FtM to Senzing based on ftm_mapper.py (could be used on Windows and Linux OS)
 03. senzing_ftm_config.json - Senzing configuration which contains all Features and Attributes used in ftm_mapper.py
 04. senzing_utils.py - module containing all SenzingAPI functions for initialization, working with Senzing configs, loading records and redoing
